@@ -14,7 +14,7 @@ This project requires the following dependencies to be installed:
 
 To install and run this project, follow these steps:
 
-1. Clone the repository: `https://github.com/dhrubasaha08/DSE-4-Soft-Computing.git`
+1. Clone the repository: `https://github.com/dhrubasaha08/CC-14-Computer-Graphics-Lab.git`
 2. Install the required dependencies using your package manager of choice (e.g. `sudo apt-get install libglfw3-dev libglew-dev`)
 3. Build the project by running `make`
 4. Run the executable by running `./bin/my_opengl_project`
