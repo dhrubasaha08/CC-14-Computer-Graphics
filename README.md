@@ -24,7 +24,7 @@ please refer to the following installation guide: [Installation Guide](https://g
 ## Assignments
 
 This repository contains the following lab assignments:
-
+TODO
 - Assignment 1: [Description](#), [Code](#)
 - Assignment 2: [Description](#), [Code](#)
 - Assignment 3: [Description](#), [Code](#)
