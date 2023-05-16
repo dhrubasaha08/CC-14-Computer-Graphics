@@ -66,54 +66,29 @@ void drawAxes(void)
     glEnd();
 }
 
-void drawLine(int x0, int y0, int x1, int y1)
-{
-    int dx = abs(x1 - x0);
-    int dy = abs(y1 - y0);
-    int sx, sy, err;
+void drawLine(float x1, float y1, float x2, float y2) {
+    int dx, dy, steps, i;
+    float x_increment, y_increment, x, y;
 
-    if (x0 < x1)
-    {
-        sx = 1;
-    }
-    else
-    {
-        sx = -1;
+    dx = x2 - x1;
+    dy = y2 - y1;
+
+    if (abs(dx) > abs(dy)) {
+        steps = abs(dx);
+    } else {
+        steps = abs(dy);
     }
 
-    if (y0 < y1)
-    {
-        sy = 1;
-    }
-    else
-    {
-        sy = -1;
-    }
+    x_increment = (float)dx / (float)steps;
+    y_increment = (float)dy / (float)steps;
 
-    err = dx - dy;
+    x = x1;
+    y = y1;
 
-    while (1)
-    {
-        glVertex2i(x0, y0);
-
-        if (x0 == x1 && y0 == y1)
-        {
-            break;
-        }
-
-        int e2 = 2 * err;
-
-        if (e2 > -dy)
-        {
-            err -= dy;
-            x0 += sx;
-        }
-
-        if (e2 < dx)
-        {
-            err += dx;
-            y0 += sy;
-        }
+    for (i = 0; i < steps; i++) {
+        glVertex2f(x, y);
+        x += x_increment;
+        y += y_increment;
     }
 }
 

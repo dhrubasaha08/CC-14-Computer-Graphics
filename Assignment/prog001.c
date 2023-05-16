@@ -8,7 +8,7 @@ Date: 2023-04-28
 #include <stdio.h>
 #include <stdlib.h>
 #include <GL/glut.h>
-
+//#include<unistd.h>
 char title[] = "DDA Line Drawing Algorithm";
 int winWidth = 1000;
 int winHeight = 1000;
@@ -77,6 +77,7 @@ void display(void)
         float d = dy - m * dx;
         for (int i = 0; i <= dx; i++)
         {
+            //sleep(1);
             glVertex2i(x, y);
             x++;
             if (d < 0)
@@ -96,6 +97,7 @@ void display(void)
         float d = dx - m * dy;
         for (int i = 0; i <= dy; i++)
         {
+           // sleep(1);
             glVertex2i(x, y);
             y++;
             if (d < 0)

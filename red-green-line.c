@@ -1,34 +1,14 @@
-/******************************************************************************************************************
-Name: Dhruba Saha
-Program: Write a program in C to implement two-dimensional scaling with respect to a pivot point. Output depends0
-upon user’s choice. [Use OpenGL Library]
-Program No. 007
-Date: 2023-04-29
-*******************************************************************************************************************/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <GL/glut.h>
-#include <math.h>
 
-char title[] = "2D Scaling";
+char title[] = "RED GREEN LINE";
 int winWidth = 1000;
 int winHeight = 1000;
-int range_x1 = -10;
-int range_x2 = 10;
-int range_y1 = -10;
-int range_y2 = 10;
-
-GLfloat scale_factor = 0;
-
-float pivotX = 0.0;
-float pivotY = 0.0;
-
-GLfloat vertices[][2] = {
-    {0.0, 0.0},
-    {1.0, 0.0},
-    {1.0, 1.0},
-    {0.0, 1.0}};
+int range_x1 = -1000;
+int range_x2 = 1000;
+int range_y1 = -1000;
+int range_y2 = 1000;
 
 void init(void)
 {
@@ -52,7 +32,7 @@ void drawAxes(void)
     GLfloat tick_spacing_x = (range_x2 - range_x1) / num_ticks_x;
     glColor3f(0.0, 0.0, 0.0);
     glBegin(GL_LINES);
-    for (register int i = 0; i <= num_ticks_x; i++)
+    for (int i = 0; i <= num_ticks_x; i++)
     {
         glVertex2f(range_x1 + i * tick_spacing_x, -tick_size_x);
         glVertex2f(range_x1 + i * tick_spacing_x, tick_size_x);
@@ -64,7 +44,7 @@ void drawAxes(void)
     GLfloat tick_spacing_y = (range_y2 - range_y1) / num_ticks_y;
     glColor3f(0.0, 0.0, 0.0);
     glBegin(GL_LINES);
-    for (register int i = 0; i <= num_ticks_y; i++)
+    for (int i = 0; i <= num_ticks_y; i++)
     {
         glVertex2f(-tick_size_y, range_y1 + i * tick_spacing_y);
         glVertex2f(tick_size_y, range_y1 + i * tick_spacing_y);
@@ -72,54 +52,70 @@ void drawAxes(void)
     glEnd();
 }
 
-void scale(float pivotX, float pivotY, GLfloat scale_factor, float scaled_vertices[][2])
-{
-    for (int i = 0; i < 4; i++)
-    {
-        scaled_vertices[i][0] = vertices[i][0] - pivotX;
-        scaled_vertices[i][1] = vertices[i][1] - pivotY;
-    }
-
-    for (int i = 0; i < 4; i++)
-    {
-        scaled_vertices[i][0] *= scale_factor;
-        scaled_vertices[i][1] *= scale_factor;
-    }
-
-    for (int i = 0; i < 4; i++)
-    {
-        scaled_vertices[i][0] += pivotX;
-        scaled_vertices[i][1] += pivotY;
-    }
-}
-
 void display(void)
 {
+    int x1 = 100, y1 = 100, x2 = 500, y2 = 300;
+    int dx = x2 - x1;
+    int dy = y2 - y1;
+    float x = x1, y = y1;
+    float m = dy / (float)dx;
+
+    int half_dx = dx / 2;
+
     glClear(GL_COLOR_BUFFER_BIT);
     drawAxes();
 
-    float scaled_vertices[4][2];
-
-    glPushMatrix();
-    glColor3f(1.0, 0.0, 0.0);
-    glBegin(GL_POLYGON);
-    for (int i = 0; i < 4; i++)
+    if (m < 1.0)
     {
-        glVertex2fv(vertices[i]);
-    }
-    glEnd();
-    glPopMatrix();
+        float d = dy - m * dx;
+        glBegin(GL_POINTS);
+        for (int i = 0; i <= dx; i++)
+        {
+            if (i <= half_dx)
+                glColor3f(0.0, 1.0, 0.0); // Green
+            else
+                glColor3f(1.0, 0.0, 0.0); // Red
 
-    scale(pivotX, pivotY, scale_factor, scaled_vertices);
-    glPushMatrix();
-    glColor3f(0.0, 1.0, 0.0);
-    glBegin(GL_POLYGON);
-    for (int i = 0; i < 4; i++)
-    {
-        glVertex2fv(scaled_vertices[i]);
+            glVertex2i(x, y);
+            x++;
+            if (d < 0)
+            {
+                d += dy;
+            }
+            else
+            {
+                d += dy - dx;
+                y++;
+            }
+        }
+        glEnd();
     }
-    glEnd();
-    glPopMatrix();
+    else
+    {
+        m = 1 / m;
+        float d = dx - m * dy;
+        glBegin(GL_POINTS);
+        for (int i = 0; i <= dy; i++)
+        {
+            if (i <= dy / 2)
+                glColor3f(0.0, 1.0, 0.0); // Green
+            else
+                glColor3f(1.0, 0.0, 0.0); // Red
+
+            glVertex2i(x, y);
+            y++;
+            if (d < 0)
+            {
+                d += dx;
+            }
+            else
+            {
+                d += dx - dy;
+                x++;
+            }
+        }
+        glEnd();
+    }
 
     glFlush();
 }
@@ -155,11 +151,6 @@ void reshape(int width, int height)
 
 int main(int argc, char **argv)
 {
-    printf("Enter the pivot point for x and y: ");
-    scanf("%f %f", &pivotX, &pivotY);
-    printf("Enter the degree of scaling: ");
-    scanf("%f", &scale_factor);
-
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
     glutInitWindowSize(winWidth, winHeight);
