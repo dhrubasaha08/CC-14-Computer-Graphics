@@ -2,45 +2,59 @@
 
 This is the repository for Dhruba Saha's Computer Graphics Lab assignments for CC-14. It contains code and other resources related to OpenGL programming in C.
 
-## Dependencies
+## Step 1: Update and Upgrade Your System
 
-This project requires the following dependencies to be installed:
+First, ensure your system is up to date:
 
-- OpenGL 3.3 or later
-- GLFW 3.3 or later
-- GLEW 2.1.0 or later
+```sh
+sudo apt update
+sudo apt upgrade -y
+```
 
-## Installation
+## Step 2: Install Essential Build Tools
 
-To install and run this project, follow these steps:
+Install the essential build tools required for compiling C programs:
 
-1. Clone the repository: `https://github.com/dhrubasaha08/CC-14-Computer-Graphics-Lab.git`
-2. Install the required dependencies using your package manager of choice (e.g. `sudo apt-get install libglfw3-dev libglew-dev`)
-3. Build the project by running `make`
-4. Run the executable by running `./bin/my_opengl_project`
+```sh
+sudo apt install build-essential
+```
 
-please refer to the following installation guide: [Installation Guide](https://gist.github.com/dhrubasaha08/c932eb3a145d726fe586db7de91c7a8f)
+## Step 3: Install OpenGL Development Libraries
 
-## Assignments
+Install the FreeGLUT development libraries necessary for OpenGL development:
 
-This repository contains the following lab assignments:
-TODO
-- Assignment 1: [Description](#), [Code](#)
-- Assignment 2: [Description](#), [Code](#)
-- Assignment 3: [Description](#), [Code](#)
-- Assignment 4: [Description](#), [Code](#)
-- Assignment 5: [Description](#), [Code](#)
+```sh
+sudo apt-get install freeglut3-dev
+```
 
-Each assignment is located in its own directory, with its own README file containing detailed instructions and explanations.
+## Step 4: Clone the Repository
 
-## Contact Information
+Clone the repository containing the OpenGL C programs:
 
-If you have any questions or feedback about this repository, please feel free to contact Dhruba Saha at [dhrubasaha@outlook.com](mailto:dhrubasaha@outlook.com).
+```sh
+git clone https://github.com/dhrubasaha08/CC-14-Computer-Graphics.git
+```
 
-## Credits
+## Step 5: Navigate to the Practical Directory
 
-This project was created by Dhruba Saha.
+Change to the directory containing the practical examples:
 
-## License
+```sh
+cd CC-14-Computer-Graphics/practicals/
+```
 
-This project is released under the Unlicense. See the `LICENSE` file for more information.
+## Step 6: Compile an Example Program
+
+Compile one of the example programs. For instance, to compile `DDA.c`, use the following command:
+
+```sh
+gcc DDA.c -lGL -lGLU -lglut -lm
+```
+
+## Step 7: Run the Compiled Program
+
+Run the compiled program:
+
+```sh
+./a.out
+```
